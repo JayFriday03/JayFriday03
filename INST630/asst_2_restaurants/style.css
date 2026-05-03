@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap');
+
+/* BASE STYLES - Students can modify and extend */
+:root {
+    --primary-color: #7c6bff;
+    --secondary-color: #22d3a5;
+    --background-color: #0d0f14;
+    --card-background: #161922;
+    --surface: #1e2230;
+    --text-color: #e2e8f0;
+    --text-muted: #8892a4;
+    --border-color: #2a3045;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --glow: 0 0 20px rgba(124, 107, 255, 0.2);
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 1.5rem;
+    background: var(--background-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(124, 107, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(34, 211, 165, 0.06) 0%, transparent 50%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    padding: 1.5rem 0 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-align: center;
+    background: linear-gradient(135deg, #a89fff, #22d3a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.5rem;
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0 0 1.2rem;
+}
+
+.view-selector {
+    display: flex;
+    gap: 0.6rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.view-button {
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    transition: all 0.2s ease;
+}
+
+.view-button:hover {
+    background: #262c3d;
+    color: var(--text-color);
+    border-color: #3d4560;
+}
+
+.view-button.active {
+    background: linear-gradient(135deg, rgba(124, 107, 255, 0.25), rgba(34, 211, 165, 0.15));
+    color: #a89fff;
+    border-color: rgba(124, 107, 255, 0.5);
+    box-shadow: 0 0 12px rgba(124, 107, 255, 0.15);
+}
+
+.display-container {
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 400px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.loading {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 3rem;
+}
+
+.error {
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.35);
+    color: #f87171;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* UTILITY CLASSES */
+.view-title {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+}
+
+.view-description {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+/* CARD GRID LAYOUT */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.restaurant-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.4rem;
+    background: var(--surface);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), var(--glow);
+    border-color: rgba(124, 107, 255, 0.35);
+}
+
+/* TABLE LAYOUT */
+.restaurant-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.restaurant-table th,
+.restaurant-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.restaurant-table th {
+    background: var(--surface);
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.6px;
+}
+
+.restaurant-table tr:hover td {
+    background: rgba(124, 107, 255, 0.05);
+}
+
+.restaurant-table th button {
+    background: none;
+    border: none;
+    color: white;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.restaurant-table th button::after {
+    content: '↕';
+    font-size: 0.7rem;
+    opacity: 0.4;
+}
+
+.restaurant-table th[aria-sort="ascending"] button::after {
+    content: '↑';
+    opacity: 1;
+    color: #a89fff;
+}
+
+.restaurant-table th[aria-sort="descending"] button::after {
+    content: '↓';
+    opacity: 1;
+    color: #a89fff;
+}
+
+/* CATEGORY GROUPS */
+.category-section {
+    margin-bottom: 1.75rem;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+/* Used Claude Code for much of the following section 
+because I couldn't figure out how to do the dropdown
+ menu's properly*/
+
+
+.category-section[open] > .category-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.category-header {
+    background: linear-gradient(135deg, rgba(124, 107, 255, 0.3), rgba(34, 211, 165, 0.15));
+    color: white;
+    padding: 0.85rem 1rem;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.category-header::-webkit-details-marker {
+    display: none;
+}
+
+.category-header::after {
+    content: '›';
+    font-size: 1.2rem;
+    transform: rotate(90deg);
+    transition: transform 0.2s ease;
+    color: #a89fff;
+}
+
+.category-section[open] > .category-header::after {
+    transform: rotate(270deg);
+}
+
+.category-header:hover {
+    background: linear-gradient(135deg, rgba(124, 107, 255, 0.4), rgba(34, 211, 165, 0.22));
+}
+
+.category-count {
+    font-weight: 400;
+    color: white;
+    font-size: 0.85rem;
+    margin-right: auto;
+    padding-left: 0.4rem;
+}
+
+.category-items {
+    border-top: 1px solid var(--border-color);
+    background: var(--surface);
+}
+
+.category-item {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: white;
+    transition: background 0.15s ease;
+}
+
+.category-item:last-child {
+    border-bottom: none;
+}
+
+.category-item:hover {
+    background: rgba(124, 107, 255, 0.06);
+}
+
+/* STATS LAYOUT */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(145deg, rgba(124, 107, 255, 0.2), rgba(34, 211, 165, 0.1));
+    border: 1px solid rgba(124, 107, 255, 0.25);
+    color: var(--text-color);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(124, 107, 255, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    box-shadow: 0 0 40px rgba(124, 107, 255, 0.18);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    background: linear-gradient(135deg, #a89fff, #22d3a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: white;
+    letter-spacing: 0.3px;
+}
+
+.stat-number--passing {
+    background: none;
+    -webkit-text-fill-color: #22d3a5;
+    color: #22d3a5;
+}
+
+.stat-number--warning {
+    background: none;
+    -webkit-text-fill-color: #fbbf24;
+    color: #fbbf24;
+}
+
+.stat-number--critical {
+    background: none;
+    -webkit-text-fill-color: #f87171;
+    color: #f87171;
+}
+
+.stat-number--city {
+    font-size: 2rem;
+}
+
+.todo-implementation {
+    background: rgba(250, 176, 5, 0.07);
+    border: 2px dashed rgba(250, 176, 5, 0.4);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    color: #fbbf24;
+}
+
+.asst-box {
+    margin-top: 2rem;
+    padding: 1.25rem;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}

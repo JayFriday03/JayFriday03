@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Views - Framework Approach</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+  <body>
+    <div class="container">
+        <header>
+            <h1>One Dataset Four Ways</h1>
+            <p><strong>Assignment:</strong> This assignment asks you to use the same data Model to power four different Views through four different Controllers. Each presentation emphasizes different aspects of the information to serve different user goals.</p>
+        </header>
+
+        <nav class="view-selector">
+            <button class="view-button" id="btn-categories" data-view="categories">Category View</button>
+            <button class="view-button" id="btn-table" data-view="table">Table View</button>
+            <button class="view-button" id="btn-stats" data-view="stats">Stats View</button>
+            <button class="view-button" id="btn-external" data-view="stats">External Library View</button>
+        </nav>
+
+        <main class="display-container">
+            <div id="data-display">
+                <div class="loading">Loading restaurant data...</div>
+            </div>
+        </main>
+
+        
+    </div>
+    <script type="module" src="./script.js" defer></script>
+</body>
+</html>x`
