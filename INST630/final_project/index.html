@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Armory — Elden Ring Weapon Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-inner">
+      <div class="spinner"></div>
+      <p class="loading-text">Forging the Armory…</p>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="detail-modal" class="modal-overlay" hidden>
+    <div class="modal-content">
+      <button id="modal-close-btn" class="modal-close" aria-label="Close">&#x2715;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="site-brand">
+        <h1 class="site-title">The Armory</h1>
+        <span class="site-subtitle">Elden Ring Weapon Explorer</span>
+      </div>
+      <nav class="main-nav" role="navigation">
+        <button class="nav-btn active" data-view="browse">Browse</button>
+        <button class="nav-btn" data-view="compare">Compare</button>
+        <button class="nav-btn" data-view="stats">Stats</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main id="main-content">
+
+    <!-- BROWSE VIEW -->
+    <section id="browse-view" class="view active">
+      <div class="browse-layout">
+
+        <aside class="filter-sidebar" id="filter-sidebar">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">Filters</h2>
+            <button id="clear-filters-btn" class="btn-text">Clear all</button>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-label">Category</h3>
+            <div id="category-filter-list" class="checkbox-list scrollable"></div>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-label">Damage Type</h3>
+            <div class="checkbox-list">
+              <label class="checkbox-item"><input type="checkbox" name="dmgtype" value="physical"> Physical</label>
+              <label class="checkbox-item"><input type="checkbox" name="dmgtype" value="magic"> Magic</label>
+              <label class="checkbox-item"><input type="checkbox" name="dmgtype" value="fire"> Fire</label>
+              <label class="checkbox-item"><input type="checkbox" name="dmgtype" value="lightning"> Lightning</label>
+              <label class="checkbox-item"><input type="checkbox" name="dmgtype" value="holy"> Holy</label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h3 class="filter-label">My Stats <span class="filter-hint">(show wieldable)</span></h3>
+            <div class="stat-inputs">
+              <label class="stat-input-label">STR <input type="number" class="stat-input" data-stat="str" placeholder="—" min="0" max="99"></label>
+              <label class="stat-input-label">DEX <input type="number" class="stat-input" data-stat="dex" placeholder="—" min="0" max="99"></label>
+              <label class="stat-input-label">INT <input type="number" class="stat-input" data-stat="int" placeholder="—" min="0" max="99"></label>
+              <label class="stat-input-label">FAI <input type="number" class="stat-input" data-stat="fai" placeholder="—" min="0" max="99"></label>
+              <label class="stat-input-label">ARC <input type="number" class="stat-input" data-stat="arc" placeholder="—" min="0" max="99"></label>
+            </div>
+          </div>
+
+        </aside>
+
+        <div class="browse-content">
+          <div class="browse-toolbar">
+            <span id="result-count" class="result-count"></span>
+          </div>
+
+          <div id="weapons-grid" class="weapons-grid"></div>
+
+          <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">&#9876;</div>
+            <h3>No weapons found</h3>
+            <p>Try adjusting your filters, or clear them to see more results.</p>
+            <button id="empty-clear-btn" class="btn-primary">Clear Filters</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPARE VIEW -->
+    <section id="compare-view" class="view">
+      <div class="compare-layout">
+        <div class="compare-header">
+          <h2 class="view-title">Compare Weapons</h2>
+          <p class="view-subtitle">Add up to 3 weapons to compare side by side.</p>
+        </div>
+
+        <div class="compare-search-row">
+          <div class="autocomplete-wrapper" id="autocomplete-wrapper">
+            <input type="text" id="compare-search-input" class="compare-search-input" placeholder="Search for a weapon…" autocomplete="off">
+            <div id="autocomplete-dropdown" class="autocomplete-dropdown" hidden></div>
+          </div>
+          <button id="clear-compare-btn" class="btn-ghost">Clear All</button>
+        </div>
+
+        <div id="compare-empty" class="compare-empty">
+          <p>Search for weapons above to begin comparing.</p>
+        </div>
+
+        <div id="compare-table-wrap" class="compare-table-wrap hidden"></div>
+
+        <div id="compare-chart-wrap" class="compare-chart-wrap hidden">
+          <h3 class="chart-title">Damage Profile</h3>
+          <div class="radar-container">
+            <canvas id="radar-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS VIEW -->
+    <section id="stats-view" class="view">
+      <div class="stats-layout">
+        <div class="stats-header">
+          <h2 class="view-title">Weapon Stats</h2>
+          <div class="stats-filter-row">
+            <label class="sort-label" for="stats-category-select">Filter Category</label>
+            <select id="stats-category-select" class="sort-select">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 class="chart-card-title">Weight vs. Total Damage</h3>
+            <p class="chart-card-subtitle">Each point is a weapon, colored by category. Hover for details.</p>
+            <div class="chart-container">
+              <canvas id="scatter-chart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-card-title">Average Damage by Category</h3>
+            <p class="chart-card-subtitle">Average Physical, Magic, and Fire damage per weapon class.</p>
+            <div class="chart-container">
+              <canvas id="bar-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
