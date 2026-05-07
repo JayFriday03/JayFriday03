@@ -698,7 +698,10 @@ function initEventListeners() {
 
 async function init() {
   try {
-    await loadWeapons();
+    const [_] = await Promise.all([
+      loadWeapons(),
+      new Promise(r => setTimeout(r, 3000)),
+    ]);
     populateCategoryFilter();
     populateStatsCategorySelect();
     initEventListeners();
